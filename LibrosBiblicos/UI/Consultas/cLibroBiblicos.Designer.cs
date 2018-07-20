@@ -178,6 +178,7 @@
             this.ImprimirButton.Size = new System.Drawing.Size(75, 39);
             this.ImprimirButton.TabIndex = 15;
             this.ImprimirButton.UseVisualStyleBackColor = true;
+            this.ImprimirButton.Click += new System.EventHandler(this.ImprimirButton_Click);
             // 
             // cLibroBiblicos
             // 

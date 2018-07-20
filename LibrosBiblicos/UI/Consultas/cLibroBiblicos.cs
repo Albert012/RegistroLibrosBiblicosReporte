@@ -1,4 +1,5 @@
 ﻿using LibrosBiblicos.Entidades;
+using LibrosBiblicos.UI.Reportes;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,9 +14,12 @@ namespace LibrosBiblicos.UI.Consultas
 {
     public partial class cLibroBiblicos : Form
     {
+        private List<LibrosBiblia> libros = new List<LibrosBiblia>();
+
         public cLibroBiblicos()
         {
             InitializeComponent();
+
         }
 
         private void ConsultarButton_Click(object sender, EventArgs e)
@@ -48,9 +52,22 @@ namespace LibrosBiblicos.UI.Consultas
                     filtro = l => (l.Tipo.Contains(CriterioTextBox.Text)) && (l.Fecha >= DesdeDateTimePicker.Value.Date && l.Fecha <= HastaDateTimePicker.Value.Date);
                     break;
             }
-            ConsultaDataGridView.DataSource = BLL.LibrosBiblicosBLL.GetList(filtro);
+            libros = BLL.LibrosBiblicosBLL.GetList(filtro);
+
+            ConsultaDataGridView.DataSource = libros;
 
 
+        }
+
+        private void ImprimirButton_Click(object sender, EventArgs e)
+        {
+            if (libros.Count == 0)
+            {
+                MessageBox.Show("No Hay Datos Para Mostar");
+                return;
+            }            
+             LibrosBibliasReportViewer librosBibliasReportViewer = new LibrosBibliasReportViewer(libros);
+            librosBibliasReportViewer.ShowDialog();
         }
     }
 }
